@@ -1,0 +1,31 @@
+<h1>Flights</h1>
+
+<%= form_with(url: flights_path, method: :get) do |form| %>
+  <div>
+    <%= form.label 'departure_airport_id', 'Departure Airport:' %>
+    <%= form.select 'departure_airport_id', options_from_collection_for_select(Airport.all, 'id', 'code'), include_blank: true %>
+  </div>
+
+  <div>
+    <%= form.label 'arrival_airport_id', 'Arrival Airport:' %>
+    <%= form.select 'arrival_airport_id', options_from_collection_for_select(Airport.all, 'id', 'code'), include_blank: true %>
+  </div>
+
+  <div>
+    <%= form.label 'flight_date', 'Flight Date:' %>
+    <%= form.text_field 'flight_date', value: params[:flight_date], type: 'date' %>
+  </div>
+
+  <%= form.submit 'Search Flights' %>
+<% end %>
+
+<ul>
+    <% @flights.each do |flight|%>
+      <li>
+        Departure Airport: <%= flight.departure_airport.code %><br>
+        Arrival Airport: <%= flight.arrival_airport.code %><br>
+        Start Datetime: <%= flight.start_datetime %><br>
+        Flight Duration: <%= flight.flight_duration %> hours
+      </li>
+    <% end %>
+</ul>
