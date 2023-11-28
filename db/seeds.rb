@@ -28,7 +28,7 @@ Airport.create(airports_data)
   Flight.create(
     departure_airport_id: departure_airport.id,
     arrival_airport_id: arrival_airport.id,
-    start_datetime: DateTime.now + rand(1..10).hours,
-    flight_duration: rand(1..8) * 100 # Assuming flight duration is in hours
+    start_datetime: DateTime.now + rand(1..10).days + rand(1..24).hours + rand(1..59).minutes,
+    flight_duration: rand(1..8) * 100 
   )
 end

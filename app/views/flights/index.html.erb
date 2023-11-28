@@ -2,18 +2,19 @@
 
 <%= form_with(url: flights_path, method: :get) do |form| %>
   <div>
-    <%= form.label 'departure_airport_id', 'Departure Airport:' %>
-    <%= form.select 'departure_airport_id', options_from_collection_for_select(Airport.all, 'id', 'code'), include_blank: true %>
+    <%= form.label 'departure_airport', 'Departure Airport:' %>
+    <%= form.select 'departure_airport', options_from_collection_for_select(Airport.all, 'id', 'code'), include_blank: true %>
   </div>
 
   <div>
-    <%= form.label 'arrival_airport_id', 'Arrival Airport:' %>
-    <%= form.select 'arrival_airport_id', options_from_collection_for_select(Airport.all, 'id', 'code'), include_blank: true %>
+    <%= form.label 'arrival_airport', 'Arrival Airport:' %>
+    <%= form.select 'arrival_airport', options_from_collection_for_select(Airport.all, 'id', 'code'), include_blank: true %>
   </div>
 
   <div>
     <%= form.label 'flight_date', 'Flight Date:' %>
-    <%= form.text_field 'flight_date', value: params[:flight_date], type: 'date' %>
+    <%# <%= form.select 'flight_date', value: params[:flight_date], type: 'date' %>
+    <%= form.select 'flight_date', options_for_select(@flight_dates.map {|date| [date.strftime("%B %d, %Y"), date] }), promt: "Select Flight Date"%>
   </div>
 
   <%= form.submit 'Search Flights' %>
@@ -24,7 +25,7 @@
       <li>
         Departure Airport: <%= flight.departure_airport.code %><br>
         Arrival Airport: <%= flight.arrival_airport.code %><br>
-        Start Datetime: <%= flight.start_datetime %><br>
+        Start Datetime: <%= flight.start_datetime.strftime("%B %d, %Y") %><br>
         Flight Duration: <%= flight.flight_duration %> hours
       </li>
     <% end %>
