@@ -14,7 +14,7 @@
   <div>
     <%= form.label 'flight_date', 'Flight Date:' %>
     <%# <%= form.select 'flight_date', value: params[:flight_date], type: 'date' %>
-    <%= form.select 'flight_date', options_for_select(@flight_dates.map {|date| [date.strftime("%B %d, %Y"), date] }), promt: "Select Flight Date"%>
+    <%= form.select 'flight_date', options_for_select(@flight_dates.map {|date| [date.strftime("%B %d, %Y"), date] }), include_blank: true%>
   </div>
 
   <%= form.submit 'Search Flights' %>
