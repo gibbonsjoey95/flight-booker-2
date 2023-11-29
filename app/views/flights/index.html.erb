@@ -13,20 +13,27 @@
 
   <div>
     <%= form.label 'flight_date', 'Flight Date:' %>
-    <%# <%= form.select 'flight_date', value: params[:flight_date], type: 'date' %>
     <%= form.select 'flight_date', options_for_select(@flight_dates.map {|date| [date.strftime("%B %d, %Y"), date] }), include_blank: true%>
   </div>
 
   <%= form.submit 'Search Flights' %>
 <% end %>
 
-<ul>
-    <% @flights.each do |flight|%>
-      <li>
+<%= form_with(url: booking_path, method: :get) do |form|%>
+
+  <% @flights.each do |flight|%>
+    <div>
+      <%= form.radio_button :selected_flight_id, flight.id %>
+      <%= form.label "flight_#{flight.id}" do %>
         Departure Airport: <%= flight.departure_airport.code %><br>
         Arrival Airport: <%= flight.arrival_airport.code %><br>
         Start Datetime: <%= flight.start_datetime.strftime("%B %d, %Y") %><br>
         Flight Duration: <%= flight.flight_duration %> hours
-      </li>
-    <% end %>
-</ul>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= form.hidden_field :num_passengers, vlaue: params[:passenger_count] %>  
+  <%= form.submit "Continue to Booking" %>
+
+<% end %>
