@@ -1,4 +1,45 @@
-<h1>Hello</h1>
+<%= form_with(model: @booking, url: bookings_path, method: :post) do |form| %>
+      <%= form.hidden_field :selected_flight_id, value: :selected_flight_id %> 
+      <%= form.hidden_field :passenger_count, value: @num_passengers %>
 
-<%= @selected_flight.arrival_airport.code %>
-<%= @num_passengers %>
+
+    <h2>Booking Details</h2>
+
+    <div>
+        <strong>Chosen Date:</strong> <%= @selected_flight.start_datetime.strftime("%B %d, %Y") %>
+    </div>
+
+    <div>
+        <strong>Departure Airport:</strong> <%= @selected_flight.departure_airport.city %>
+    </div>
+
+    <div>
+        <strong>Arrival Airport:</strong> <%= @selected_flight.arrival_airport.city %>
+    </div>
+
+    <div>
+        <strong>Flight ID:</strong> <%= @selected_flight.id %>
+    </div>
+
+    <div>
+        <strong>Number of Passengers:</strong> <%= @num_passengers %>
+    </div>
+
+    <h2>Passenger Information</h2>
+
+    <%= form.fields_for :passengers do |passenger_form| %>
+
+        <div>
+            <%= passenger_form.label :name, 'Name:'%>
+            <%= passenger_form.text_field :name %>
+        </div>
+
+        <div>
+            <%= passenger_form.label :email, 'Email'%>
+            <%= passenger_form.email_field :email%>
+        </div>
+
+    <% end %>
+
+    <%= form.submit 'Confirm Booking' %>
+<% end %>
